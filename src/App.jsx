@@ -1,54 +1,26 @@
-import { Input } from "postcss";
+import { useState } from "react";
 
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard.jsx";
+import { active } from "browser-sync";
 
 function App() {
-	// const [editNameBtn, setEditNameBtn] = useState(false);
-	// const [playerOneName, setPlayerOneName] = useState("Player 1");
+	const [activePlayer, setActivePlayer] = useState("X");
 
-	// const onEditBtnClicked = () => {
-	// 	setEditNameBtn(true);
-	// };
-
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	setEditNameBtn(false);
-	// 	console.log("Form submitted with value:", playerOneName);
-	// };
-
-	// const handleChange = (e) => {
-	// 	setPlayerOneName(e.target.value);
-	// };
+	const handleSelectSquare = () => {
+		setActivePlayer((curActivePalyer) => {
+			curActivePalyer === "X" ? "O" : "X";
+		});
+	};
 
 	return (
 		<main>
 			<div id="game-container">
-				<ol id="players">
-					{/* <li>
-						<span className="player">
-							{!editNameBtn ? (
-								<span className="player-name">{playerOneName}</span>
-							) : (
-								<form onSubmit={handleSubmit}>
-									<input
-										type="text"
-										value={playerOneName}
-										onChange={handleChange}
-									></input>
-									<button type="submit">Submit</button>
-								</form>
-							)}
-							<span className="player-symbol">X</span>
-						</span>
-						{!editNameBtn ? (
-							<button onClick={onEditBtnClicked}>Edit</button>
-						) : null}
-					</li> */}
-					<Player initialName="Player 1" symbol="X" />
-					<Player initialName="Player 2" symbol="O" />
+				<ol id="players" className="highlight-player">
+					<Player initialName="Player 1" symbol="X" isActive={activePlayer === 'X'}/>
+					<Player initialName="Player 2" symbol="O" isActive={activePlayer === 'O'}/>
 				</ol>
-				<GameBoard />
+				<GameBoard onSelectSquare={handleSelectSquare} />
 			</div>
 			LOG
 		</main>
